@@ -1,0 +1,12 @@
+{
+    "name": "eppeters/combinator",
+    "description": "A simple counting API",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Eddie Peters",
+            "email": "edward.paul.peters@gmail.com"
+        }
+    ],
+    "require": {}
+}

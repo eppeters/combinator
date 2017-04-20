@@ -1,0 +1,31 @@
+version: '2'
+services:
+  combinator-api:
+    image: php:7.1.4-apache
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_DB_HOST=combinator-db
+      - APP_DB_PORT=5432
+      - APP_DB_NAME=combinator
+      - APP_DB_USER=postgres
+      - APP_DB_PASSWORD=postgres
+    ports:
+      - "8080:80"
+    links:
+      - combinator-db
+  combinator-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=combinator
+    ports:
+      - "5000:5432"
+  composer:
+    image: composer/composer
+    volumes:
+      - ./:/app
+    command: update
+    depends_on:
+      - combinator-api
