@@ -54,11 +54,10 @@ do
     esac
 done
 
+PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
 docker_run_tests() {
     docker run --rm -v "$(pwd):/app" -w /app "$PHP_CONTAINER_IMAGE" "$@"
 }
-
-PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
     trap cleanup EXIT
