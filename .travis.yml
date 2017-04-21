@@ -9,8 +9,8 @@ script:
     #- ./tests/run.sh --all
 after_success:
     - if [ "$TRAVIS_BRANCH" == "master" ]; then
-          docker run --rm -v $(pwd):/app composer/composer install;
-          docker build --tag combinator-api registry.heroku.com/$HEROKU_APP/web;
-          docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com;
-          docker push registry.heroku.com/$HEROKU_APP/web;
+          docker build --tag combinator-api . ;
+          docker tag combinator-api registry.heroku.com/$HEROKU_APP/web ;
+          docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com ;
+          docker push registry.heroku.com/$HEROKU_APP/web ;
       fi
