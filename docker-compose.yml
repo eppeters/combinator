@@ -5,7 +5,7 @@ services:
     volumes:
       - ./:/var/www
     environment:
-      - PORT=8030
+      - PORT=80
       - APP_DB_HOST=combinator-db
       - APP_DB_PORT=5432
       - APP_DB_NAME=combinator
@@ -13,7 +13,6 @@ services:
       - APP_DB_PASSWORD=postgres
     ports:
       - "8080:80"
-      - "8030:8030"
     links:
       - combinator-db
   combinator-db:
