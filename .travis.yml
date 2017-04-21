@@ -5,7 +5,7 @@ before_install:
     - docker-compose run composer
     - docker-compose up -d --build combinator-api combinator-db
 script:
-    - echo 'hey'
+    - echo 'hey i think that worked'
     #- ./tests/run.sh --all
 after_success:
     - if [ "$TRAVIS_BRANCH" == "master" ]; then
