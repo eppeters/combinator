@@ -1,10 +1,11 @@
 version: '2'
 services:
   combinator-api:
-    image: php:7.1.4-apache
+    build: ./
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
     environment:
+      - PORT=8030
       - APP_DB_HOST=combinator-db
       - APP_DB_PORT=5432
       - APP_DB_NAME=combinator
@@ -12,6 +13,7 @@ services:
       - APP_DB_PASSWORD=postgres
     ports:
       - "8080:80"
+      - "8030:8030"
     links:
       - combinator-db
   combinator-db:
