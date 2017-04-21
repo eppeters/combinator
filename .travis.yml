@@ -3,12 +3,12 @@ services:
     - docker
 before_install:
     - docker-compose run composer
-    - docker-compose up -d combinator-api combinator-db
+    - docker-compose up -d --build combinator-api combinator-db
 script:
     - echo 'hey'
     #- ./tests/run.sh --all
 after_success:
     - if [ "$TRAVIS_BRANCH" == "master" ]; then
-          docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com
+          docker login --username=_ --password="$HEROKU_API_KEY" registry.heroku.com;
           docker push registry.heroku.com/"$HEROKU_APP"/web;
       fi
