@@ -28,8 +28,6 @@ if [[ ! $# -eq 1 ]]; then
     usage
 fi
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 which_tests=''
 while [[ $# -gt 0 ]]
 do
@@ -56,12 +54,20 @@ do
     esac
 done
 
-PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+DOCKER_PHPUNIT_TESTS_DIR="tests/phpunit"
 DOCKER_DEV_NETWORK="combinator_dev"
 DOCKER_COMBINATOR_DEV_INSTANCES="combinator-dev-webserver"
+DOCKER_APP_DIR='/app'
+DOCKER_ENV_VAR_FILE="$SCRIPT_DIR/.env"
+
+DOCKER_PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
+BEHAT_COMMAND='php vendor/bin/behat'
+PHPUNIT_COMMAND="php vendor/bin/phpunit $DOCKER_PHPUNIT_TESTS_DIR"
 
 docker_run_tests() {
-    docker run --link "$DOCKER_COMBINATOR_DEV_INSTANCES" --network "$DOCKER_DEV_NETWORK" --env-file "$SCRIPT_DIR/.env" --rm -v "$(pwd):/app" -w /app "$PHP_CONTAINER_IMAGE" "$@"
+    docker run --link "$DOCKER_COMBINATOR_DEV_INSTANCES" --network "$DOCKER_DEV_NETWORK" --env-file "$SCRIPT_DIR/.env" --rm -v "$(pwd):$DOCKER_APP_DIR" -w "$DOCKER_APP_DIR" "$DOCKER_PHP_CONTAINER_IMAGE" sh -c "$@"
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
@@ -69,14 +75,14 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 
     case $which_tests in
         all)
-            docker_run_tests php vendor/bin/behat
-            docker_run_tests php vendor/bin/phpunit
+            docker_run_tests "$BEHAT_COMMAND"
+            docker_run_tests "$PHPUNIT_COMMAND"
         ;;
         behavior)
-            docker_run_tests php vendor/bin/behat
+            docker_run_tests "$BEHAT_COMMAND"
         ;;
         unit)
-            docker_run_tests php vendor/bin/phpunit
+            docker_run_tests "$PHPUNIT_COMMAND"
         ;;
         *)
             fatal "Unknown tests $which_tests. This is a problem with the script."

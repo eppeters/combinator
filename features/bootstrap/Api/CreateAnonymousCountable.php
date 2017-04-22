@@ -38,7 +38,7 @@ class CreateAnonymousCountable implements Context
      */
     public function iHaveAUniqueNameForAQuantityIWantToCountACountable()
     {
-        $this->countableName = 'test_uniqueCountable_' . strftime('%Y-%m-%d', time());
+        $this->countableName = 'test_uniqueCountable_' . time();
     }
 
     /**
