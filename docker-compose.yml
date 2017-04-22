@@ -1,6 +1,6 @@
 version: '2'
 services:
-  combinator-api:
+  combinator-dev-webserver:
     build: ./
     volumes:
       - ./:/var/www
@@ -15,6 +15,9 @@ services:
       - "8080:80"
     links:
       - combinator-db
+    container_name: combinator-dev-webserver
+    networks:
+      - dev
   combinator-db:
     image: postgres
     environment:
@@ -29,4 +32,7 @@ services:
       - ./:/app
     command: update
     depends_on:
-      - combinator-api
+      - combinator-dev-webserver
+
+networks:
+  dev:

@@ -28,6 +28,8 @@ if [[ ! $# -eq 1 ]]; then
     usage
 fi
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 which_tests=''
 while [[ $# -gt 0 ]]
 do
@@ -55,8 +57,11 @@ do
 done
 
 PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
+DOCKER_DEV_NETWORK="combinator_dev"
+DOCKER_COMBINATOR_DEV_INSTANCES="combinator-dev-webserver"
+
 docker_run_tests() {
-    docker run --rm -v "$(pwd):/app" -w /app "$PHP_CONTAINER_IMAGE" "$@"
+    docker run --link "$DOCKER_COMBINATOR_DEV_INSTANCES" --network "$DOCKER_DEV_NETWORK" --env-file "$SCRIPT_DIR/.env" --rm -v "$(pwd):/app" -w /app "$PHP_CONTAINER_IMAGE" "$@"
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
