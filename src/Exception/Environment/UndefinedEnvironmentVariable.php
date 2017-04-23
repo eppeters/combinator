@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Combinator\Exception;
+namespace Combinator\Exception\Environment;
 
 use Exception;
 use Throwable;

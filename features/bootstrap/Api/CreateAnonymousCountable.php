@@ -4,7 +4,7 @@ namespace Test\Behavior\Context\Api;
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Combinator\Exception\UndefinedEnvironmentVariable;
+use Combinator\Exception\Environment\UndefinedEnvironmentVariable;
 use Exception;
 use GuzzleHttp\Client;
 
@@ -34,7 +34,7 @@ class CreateAnonymousCountable implements Context
     }
 
     /**
-     * @Given I have a unique name for a quantity I want to count, a countable
+     * @Given I have a name for a quantity I want to count, a countable
      */
     public function iHaveAUniqueNameForAQuantityIWantToCountACountable()
     {
@@ -42,7 +42,7 @@ class CreateAnonymousCountable implements Context
     }
 
     /**
-     * @When I create the countable
+     * @When I post the countable name
      */
     public function iCreateTheCountable()
     {

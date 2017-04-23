@@ -60,14 +60,14 @@ DOCKER_PHPUNIT_TESTS_DIR="tests/phpunit"
 DOCKER_DEV_NETWORK="combinator_dev"
 DOCKER_COMBINATOR_DEV_INSTANCES="combinator-dev-webserver"
 DOCKER_APP_DIR='/app'
-DOCKER_ENV_VAR_FILE="$SCRIPT_DIR/.env"
+DOCKER_ENV_VAR_FILE="$SCRIPT_DIR/../.env"
 
 DOCKER_PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
 BEHAT_COMMAND='php vendor/bin/behat'
 PHPUNIT_COMMAND="php vendor/bin/phpunit $DOCKER_PHPUNIT_TESTS_DIR"
 
 docker_run_tests() {
-    docker run --link "$DOCKER_COMBINATOR_DEV_INSTANCES" --network "$DOCKER_DEV_NETWORK" --env-file "$SCRIPT_DIR/.env" --rm -v "$(pwd):$DOCKER_APP_DIR" -w "$DOCKER_APP_DIR" "$DOCKER_PHP_CONTAINER_IMAGE" sh -c "$@"
+    docker run --link "$DOCKER_COMBINATOR_DEV_INSTANCES" --network "$DOCKER_DEV_NETWORK" --env-file "$DOCKER_ENV_VAR_FILE" --rm -v "$(pwd):$DOCKER_APP_DIR" -w "$DOCKER_APP_DIR" "$DOCKER_PHP_CONTAINER_IMAGE" sh -c "$@"
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
@@ -88,5 +88,4 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
             fatal "Unknown tests $which_tests. This is a problem with the script."
         ;;
     esac
-
 fi

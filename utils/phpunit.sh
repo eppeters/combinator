@@ -2,9 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-#/ Usage: behat.sh ARGS...
-#/ Description: Runs behat on the source inside a container, using the provided args
-#/ Examples: behat.sh --append-snippets
+#/ Usage: phpunit.sh ARGS...
+#/ Description: Runs phpunit on the source inside a container, using the provided args
+#/ Examples: phpunit.sh --help
 usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && usage
 
@@ -18,16 +18,12 @@ cleanup() {
     exit
 }
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DOCKER_ENV_VAR_FILE="$SCRIPT_DIR/../.env"
-
-PHP_CONTAINER_IMAGE='php:7.1.4-alpine'
-docker_run_behat() {
-    docker run --env-file "$DOCKER_ENV_VAR_FILE" --rm -v "$(pwd):/app" -w /app "$PHP_CONTAINER_IMAGE" vendor/bin/behat "$@"
+docker_run_phpunit() {
+	docker run --rm -v "$(pwd):/app" phpunit/phpunit:6.0.6 "$@"
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
     trap cleanup EXIT
 
-    docker_run_behat "$@"
+    docker_run_phpunit "$@"
 fi
