@@ -2,9 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-#/ Usage: phpunit.sh ARGS...
-#/ Description: Runs phpunit on the source inside a container, using the provided args
-#/ Examples: phpunit.sh --help
+#/ Usage: php7.sh ARGS...
+#/ Description: Runs php on the source inside a container, using the provided args
+#/ Examples: php7.sh vendor/bin/composer require phpunit/phpunit
 usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && usage
 
@@ -18,12 +18,12 @@ cleanup() {
     exit
 }
 
-docker_run_phpunit() {
-	docker run --rm -v "$(pwd):/app" phpunit/phpunit:6.0.6 "$@"
+docker_run_php7() {
+    docker run --rm -v "$(pwd):/app" -w /app php:7.1.4-cli php "$@"
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
     trap cleanup EXIT
 
-    docker_run_phpunit "$@"
+    docker_run_php7 "$@"
 fi

@@ -6,7 +6,7 @@ namespace Combinator\Handler;
 
 use Combinator\Contract\Countable\CountableTransformer;
 use Combinator\Contract\HTTP\CreateHandler;
-use Combinator\DAO\CountableDAO;
+use Combinator\DAO\CountableSQLDAO;
 use Combinator\Exception\Value\InvalidNameException;
 use Combinator\HTTP\Response\Invalid\InvalidNameResponse;
 use Combinator\HTTP\Response\Valid\ItemCreatedResponse;
@@ -20,7 +20,7 @@ class CreateCountableHandler implements CreateHandler
     protected $transformer;
     protected $dao;
 
-    public function __construct(CountableTransformer $transformer, CountableDAO $dao)
+    public function __construct(CountableTransformer $transformer, CountableSQLDAO $dao)
     {
         $this->transformer = $transformer;
         $this->dao = $dao;

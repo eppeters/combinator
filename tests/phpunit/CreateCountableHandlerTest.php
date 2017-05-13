@@ -2,7 +2,7 @@
 
 namespace Combinator\Test\Unit;
 
-use Combinator\DAO\CountableDAO;
+use Combinator\DAO\CountableSQLDAO;
 use Combinator\DTO\Countable;
 use Combinator\Exception\Value\InvalidNameException;
 use Combinator\HTTP\Response\Invalid\InvalidNameResponse;
@@ -18,7 +18,7 @@ class CreateCountableHandlerTest extends TestCase
     public function testCreatingGetsRequestBody()
     {
         $transformer = $this->createMock(JsonCountableTransformer::class);
-        $dao = $this->createMock(CountableDAO::class);
+        $dao = $this->createMock(CountableSQLDAO::class);
         $handler = new CreateCountableHandler($transformer, $dao);
 
         $request = $this->createMock(Request::class);
@@ -35,7 +35,7 @@ class CreateCountableHandlerTest extends TestCase
         $exception = new InvalidNameException();
         $transformer->method('toCountable')->willThrowException($exception);
 
-        $dao = $this->createMock(CountableDAO::class);
+        $dao = $this->createMock(CountableSQLDAO::class);
 
         $handler = new CreateCountableHandler($transformer, $dao);
 
@@ -48,7 +48,7 @@ class CreateCountableHandlerTest extends TestCase
 
     public function testReturnsItemCreatedResponseWhenNoExceptionIsThrownByTransformer() {
         $transformer = $this->createMock(JsonCountableTransformer::class);
-        $dao = $this->createMock(CountableDAO::class);
+        $dao = $this->createMock(CountableSQLDAO::class);
 
         $handler = new CreateCountableHandler($transformer, $dao);
 
@@ -65,7 +65,7 @@ class CreateCountableHandlerTest extends TestCase
         $transformer = $this->createMock(JsonCountableTransformer::class);
         $transformer->method('toCountable')->willReturn($countable);
 
-        $dao = $this->createMock(CountableDAO::class);
+        $dao = $this->createMock(CountableSQLDAO::class);
         $dao
             ->expects($this->once())
             ->method('save')

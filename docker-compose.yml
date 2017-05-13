@@ -1,5 +1,6 @@
 version: '2'
 services:
+
   combinator-dev-webserver:
     build: ./
     volumes:
@@ -14,11 +15,11 @@ services:
     ports:
       - "8080:80"
     links:
-      - combinator-db
+      - combinator-dev-db
     container_name: combinator-dev-webserver
     networks:
       - dev
-  combinator-db:
+  combinator-dev-db:
     image: postgres
     environment:
       - POSTGRES_USER=postgres
@@ -26,13 +27,33 @@ services:
       - POSTGRES_DB=combinator
     ports:
       - "5000:5432"
-  composer:
+    networks:
+      - dev
+
+  combinator-composer-update:
     image: composer/composer
     volumes:
       - ./:/app
     command: update
     depends_on:
       - combinator-dev-webserver
+
+  combinator-db-migrations:
+    image: php:7.1.4-cli
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: idkyet
+    environment:
+      - PHINX_APP_DB_HOST=combinator-dev-db
+      - PHINX_APP_DB_PORT=5432
+      - PHINX_APP_DB_NAME=combinator
+      - PHINX_APP_DB_USER=postgres
+      - PHINX_APP_DB_PASSWORD=postgres
+    links:
+      - combinator-dev-db
+    depends_on:
+      - combinator-dev-db
 
 networks:
   dev:

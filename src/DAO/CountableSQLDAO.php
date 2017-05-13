@@ -6,9 +6,8 @@ namespace Combinator\DAO;
 
 use Combinator\Contract\DAO;
 use Combinator\Contract\DTO;
-use Combinator\DTO\Countable;
 
-class CountableDAO extends DAO
+class CountableSQLDAO extends DAO
 {
 
     public function __construct(\PDO $handler)

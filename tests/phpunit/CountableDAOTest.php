@@ -2,7 +2,7 @@
 
 namespace Combinator\Test\Unit;
 
-use Combinator\DAO\CountableDAO;
+use Combinator\DAO\CountableSQLDAO;
 use Combinator\DTO\Countable;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class CountableDAOTest extends TestCase
 
         $pdo = $this->getBasePDOMock();
 
-        $countableDAO = new CountableDAO($pdo);
+        $countableDAO = new CountableSQLDAO($pdo);
         $countableDAO->save($countable);
     }
 
@@ -45,7 +45,7 @@ class CountableDAOTest extends TestCase
         $pdo->expects($this->once())
             ->method('prepare');
 
-        $countableDAO = new CountableDAO($pdo);
+        $countableDAO = new CountableSQLDAO($pdo);
         $countableDAO->save($countable);
     }
 
@@ -59,7 +59,7 @@ class CountableDAOTest extends TestCase
         $pdo = $this->createMock(\PDO::class);
         $pdo->method('prepare')->willReturn($preparedStatement);
 
-        $countableDAO = new CountableDAO($pdo);
+        $countableDAO = new CountableSQLDAO($pdo);
         $countableDAO->save($countable);
     }
 
