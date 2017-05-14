@@ -4,9 +4,9 @@ paths:
 
 environments:
     default_migration_table: phinxlog
-    default_database: all
+    default_database: all_environments
     all_environments:
-        adapter: mysql
+        adapter: pgsql
         host: %%PHINX_APP_DB_HOST%%
         name: %%PHINX_APP_DB_NAME%%
         user: %%PHINX_APP_DB_USER%%
