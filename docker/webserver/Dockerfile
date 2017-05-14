@@ -5,4 +5,6 @@ RUN sed -i 's/<VirtualHost *:80>/<VirtualHost *:*>/' /etc/apache2/sites-enabled/
 
 RUN echo 'Listen ${PORT}' > /etc/apache2/ports.conf
 
+RUN cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+
 COPY . /var/www/

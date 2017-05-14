@@ -17,6 +17,8 @@ services:
     links:
       - combinator-dev-db
     container_name: combinator-dev-webserver
+    networks:
+      - dev # allows tests to communicate with webserver over network
 
   combinator-db-migrations:
     build: docker/db-migrations
