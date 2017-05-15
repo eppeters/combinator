@@ -6,7 +6,6 @@ namespace Combinator\Contract;
 
 abstract class DAO
 {
-
     public function __construct(\PDO $handler)
     {
         $this->handler = $handler;
@@ -17,4 +16,5 @@ abstract class DAO
      */
     public abstract function save(DTO $dto);
 
+    public abstract function read($identifier);
 }

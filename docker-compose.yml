@@ -7,7 +7,7 @@ services:
       - ./:/var/www
     environment:
       - PORT=80
-      - APP_DB_HOST=combinator-db
+      - APP_DB_HOST=combinator-dev-db
       - APP_DB_PORT=5432
       - APP_DB_NAME=combinator
       - APP_DB_USER=postgres

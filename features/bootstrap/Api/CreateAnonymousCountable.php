@@ -46,7 +46,9 @@ class CreateAnonymousCountable implements Context
      */
     public function iCreateTheCountable()
     {
-        $this->client->post("/countable/$this->countableName");
+        $this->client->post('/countable', [
+            'body' => json_encode(['name' => $this->countableName])
+        ]);
     }
 
     /**

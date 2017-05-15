@@ -34,12 +34,10 @@ class CreateCountableHandler implements CreateHandler
         $jsonBody = $request->getBody();
 
         try {
-
             $countable = $this->transformer->toCountable($jsonBody);
             $this->dao->save($countable);
             $response = new ItemCreatedResponse();
         } catch (InvalidNameException $exception) {
-
             $response = new InvalidNameResponse();
             $response->withBody(stream_for('Invalid name: ' . $exception->getMessage()));
         }

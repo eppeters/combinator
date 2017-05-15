@@ -4,10 +4,12 @@
 namespace Combinator\DTO;
 
 
+use Combinator\Contract\Json\Jsonable;
+use Combinator\Exception\Value\InvalidJSONException;
 use Combinator\Exception\Value\InvalidNameException;
 use Combinator\Contract\DTO;
 
-class Countable implements DTO
+class Countable implements DTO, Jsonable
 {
     protected $id;
     protected $name;
@@ -41,6 +43,24 @@ class Countable implements DTO
 
     public function getValue() : int {
         return $this->value;
+    }
+
+    public function toJson() : string
+    {
+        $arrayRepresentation = [
+            'name' => $this->name,
+            'value' => $this->value
+        ];
+
+        $json_representation = json_encode($arrayRepresentation);
+        if ($json_representation === false) {
+            throw new InvalidJSONException(
+                "Unable to turn Countable into string. Original countable: " .
+                print_r($arrayRepresentation, true)
+            );
+        }
+
+        return $json_representation;
     }
 
 }
