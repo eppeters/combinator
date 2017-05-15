@@ -3,7 +3,7 @@ services:
     - docker
 before_install:
     - docker-compose run combinator-composer-update
-    - docker-compose up -d --build combinator-dev-webserver combinator-dev-db
+    - docker-compose up -d --build combinator-dev-webserver combinator-db-migrations combinator-dev-db
 script:
     - ./tests/run.sh --all
 after_success:
